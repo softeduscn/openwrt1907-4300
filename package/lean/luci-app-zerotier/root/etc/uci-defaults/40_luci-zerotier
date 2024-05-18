@@ -1,0 +1,25 @@
+uci -q batch <<-EOF >/dev/null
+	delete ucitrack.@zerotier[-1]
+	add ucitrack zerotier
+	set ucitrack.@zerotier[-1].init=zerotier
+	commit ucitrack
+  delete firewall.zerotier
+	set firewall.zerotier=include
+	set firewall.zerotier.type=script
+	set firewall.zerotier.path=/etc/zerotier.start
+	set firewall.zerotier.reload=1
+	commit firewall
+EOF
+
+ztmoon='e4bc60ae2e'
+ztid='9f77fc393e71fa10'
+uci set zerotier.sample_config.enabled=1
+uci set zerotier.sample_config.nat=1
+uci del_list zerotier.sample_config.join='8056c2e21c000001'
+uci add_list zerotier.sample_config.join=$ztid
+uci add_list zerotier.sample_config.moon=$ztmoon
+uci commit zerotier
+
+chmod 0755 /usr/share/zerotier/*.sh	
+rm -f /tmp/luci-indexcache
+exit 0

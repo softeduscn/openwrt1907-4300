@@ -1,0 +1,20 @@
+#!/bin/sh
+ 
+[ "$SUBSYSTEM" = block ] || exit0
+[ "$DEVTYPE" = partition -a"$ACTION" = add ] && {
+    echo"$DEVICENAME" | grep 'sd[a-z][1-9]' || exit 0
+    test-d /mnt/$DEVICENAME || mkdir /mnt/$DEVICENAME
+    mount  -o iocharset=utf8,rw /dev/$DEVICENAME/mnt/$DEVICENAME || \
+        mount-o rw /dev/$i /mnt/$i
+}
+ 
+[ "$DEVTYPE" = partition -a"$ACTION" = remove ] && {
+    echo"$DEVICENAME" | grep 'sd[a-z][1-9]' || exit 0
+    umount/mnt/$DEVICENAME && rmdir /mnt/$DEVICENAME
+}
+
+blkdev=`dirname $DEVPATH`
+basename=`basename $blkdev`
+device=`basename $DEVPATH`
+[ -z "${device##sd*}" ] && /usr/share/sysmonitor/sysapp.sh samba &
+

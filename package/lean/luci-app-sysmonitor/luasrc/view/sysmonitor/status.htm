@@ -1,0 +1,40 @@
+<fieldset class="cbi-section">
+	<table width="100%" cellspacing="10" id="_xlnetacc_lanip_status_table">
+		<tr><td width="20%" id="_lanip_title"></td><td title="GOTO network setting" id="_lanip_state"><em></em></td></tr>
+	</table>
+	<table width="100%" cellspacing="10" id="_xlnetacc_wanip_status_table">
+		<tr><td width="20%" id="_wanip_title"></td><td title="GOTO network setting" id="_wanip_state"><em></em></td></tr>
+	</table>
+	<table width="100%" cellspacing="10" id="_xlnetacc_wireguard_status_table">
+		<tr><td width="20%" id="_wireguard_title"></td><td title="GOTO wireguard users..." id="_wireguard_state"><em></em></td></tr>
+	</table>
+</fieldset>
+
+<script type="text/javascript">//<![CDATA[
+	var wanip_state = document.getElementById('_wanip_state');
+	var lanip_state = document.getElementById('_lanip_state');
+	var wireguard_state = document.getElementById('_wireguard_state');
+	
+	var wanip_title = document.getElementById('_wanip_title');
+	var lanip_title = document.getElementById('_lanip_title');
+	var wireguard_title = document.getElementById('_wireguard_title');
+
+	XHR.poll(5, '<%=luci.dispatcher.build_url("admin", "sys", "sysmonitor", "lanip_status")%>', null, function(x, status) {
+		if ( x && x.status == 200 ) {
+			lanip_title.innerHTML ='<em><b>'+status.lanip_title+'</b></em>';
+			lanip_state.innerHTML ='<em><b>'+status.lanip_state+'</b></em>';
+		}
+	});
+	XHR.poll(5, '<%=luci.dispatcher.build_url("admin", "sys", "sysmonitor", "wanip_status")%>', null, function(x, status) {
+		if ( x && x.status == 200 ) {
+			wanip_title.innerHTML ='<em><b>'+status.wanip_title+'</b></em>';
+			wanip_state.innerHTML ='<em><b>'+status.wanip_state+'</b></em>';
+		}
+	});
+	XHR.poll(5, '<%=luci.dispatcher.build_url("admin", "sys", "sysmonitor", "wireguard_status")%>', null, function(x, status) {
+		if ( x && x.status == 200 ) {
+			wireguard_title.innerHTML ='<em><b>'+status.wireguard_title+'</b></em>';
+			wireguard_state.innerHTML ='<em><b>'+status.wireguard_state+'</b></em>';
+		}
+	});
+//]]></script>

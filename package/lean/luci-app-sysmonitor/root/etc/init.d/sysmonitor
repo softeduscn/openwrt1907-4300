@@ -1,0 +1,19 @@
+#!/bin/sh /etc/rc.common
+#
+# Copyright (C) 2017 openwrt-system-monitor
+#
+# This is free software, licensed under the GNU General Public License v3.
+# See /LICENSE for more information.
+#
+START=99
+STOP=15
+NAME=sysmonitor
+APP_PATH=/usr/share/$NAME
+
+start()
+{
+	[ $(uci get sysmonitor.sysmonitor.enable) == 0 ] && {
+	uci set sysmonitor.sysmonitor.enable=1
+	uci commit sysmonitor
+	}
+}

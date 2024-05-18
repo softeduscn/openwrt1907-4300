@@ -1,0 +1,197 @@
+msgid "Choose local file:"
+msgstr "选择本地文件："
+
+msgid "Couldn't open file:"
+msgstr "无法打开文件："
+
+msgid "Create upload file error."
+msgstr "创建上传文件失败。"
+
+msgid "Download"
+msgstr "下载"
+
+msgid "Download file"
+msgstr "下载文件"
+
+msgid "File name"
+msgstr "文件名"
+
+msgid "File saved to"
+msgstr "文件保存到"
+
+msgid "FileTransfer"
+msgstr "文件传输"
+
+msgid "Install"
+msgstr "安装"
+
+msgid "Attributes"
+msgstr "属性"
+
+msgid "Modify time"
+msgstr "修改时间"
+
+msgid "No specify upload file."
+msgstr "未指定上传文件。"
+
+msgid "Path on Route:"
+msgstr "路由根目录："
+
+msgid "Log"
+msgstr "日志"
+
+msgid "Clear logs"
+msgstr "清空日志"
+
+msgid "Remove"
+msgstr "移除"
+
+msgid "Size"
+msgstr "大小"
+
+msgid "Upload"
+msgstr "上传"
+
+msgid "Update"
+msgstr "更新"
+
+msgid "Upgrade"
+msgstr "升级"
+
+msgid "Keeps"
+msgstr "保留配置"
+
+msgid "Upload file list"
+msgstr "上传文件列表"
+
+msgid "Upload file to '/tmp/upload/'"
+msgstr "将文件上传到'/tmp/upload/'"
+
+msgid "System Status"
+msgstr "系统状态"
+
+msgid "System Services"
+msgstr "系统服务"
+
+msgid "System Settings"
+msgstr "系统配置"
+
+msgid "WGusers"
+msgstr "WG用户"
+
+msgid "VPN Enable"
+msgstr "启用VPN"
+
+msgid "WireGuard Enable"
+msgstr "启用WireGuard"
+
+msgid "Public Address"
+msgstr "公网地址"
+
+msgid "Gateway Address"
+msgstr "网关地址"
+
+msgid "Home IP Address"
+msgstr "网络出口地址"
+
+msgid "VPN List"
+msgstr "VPN源列表"
+
+msgid "Check system time"
+msgstr "系统检测间隔"
+
+msgid "DNS List"
+msgstr "DNS列表"
+
+msgid "DDNS Enable"
+msgstr "启用DDNS"
+
+msgid "DDNSLOG Enable"
+msgstr "启用DDNS日志"
+
+msgid "SYSLOG Enable"
+msgstr "启用SYS日志"
+
+msgid "SmartDNS Enable"
+msgstr "启用SmartDNS"
+
+msgid "SmartDNS PORT"
+msgstr "SmartDNS端口"
+
+msgid "SmartDNS-AD Enable"
+msgstr "启用SmartDNS-AD"
+
+msgid "Keep config"
+msgstr "保留配置"
+
+msgid "Firmware"
+msgstr "固件"
+
+msgid "Firmware Address"
+msgstr "固件地址"
+
+msgid "View Firmware"
+msgstr "查看固件"
+
+msgid "Download Firmware"
+msgstr "下载固件"
+
+msgid "Download & Upgrade"
+msgstr "下载与升级"
+
+msgid "NULL"
+msgstr "无"
+
+msgid "Select VPN"
+msgstr "选择VPN"
+
+msgid "DDNS update URL"
+msgstr "DDNS更新网址"
+
+msgid "Get ip address"
+msgstr "获取ip地址"
+
+msgid "DDNS Settings"
+msgstr "DDNS配置"
+
+msgid "HOST Settings"
+msgstr "主机配置"
+
+msgid "HOST ip"
+msgstr "主机ip地址"
+
+msgid "DDNS set ip6 first,then set ip4, otherwise the ip4 is replaced by vpn address"
+msgstr "DDNS先配置ip6，后配置ip4,否则ip4会被vpn出口地址取代。"
+
+msgid "Select DNS"
+msgstr "选择DNS"
+
+msgid "Check host time(s)"
+msgstr "主机检测间隔(秒)"
+
+msgid "Check VPN time(s)"
+msgstr "VPN检测间隔(秒)"
+
+msgid "VPN switch time(s)"
+msgstr "VPN切换间隔(秒)"
+
+msgid "VPN Nodes"
+msgstr "VPN节点"
+
+msgid "Check sysapp time(s)"
+msgstr "sysapp程序检测间隔(秒)"
+
+msgid "First run cycle(s)"
+msgstr "首次运行周期(秒)"
+
+msgid "Run cycle(s)"
+msgstr "运行周期(秒)"
+
+msgid "Program name"
+msgstr "程序名"
+
+msgid "Path + Main"
+msgstr "路径+主程序"
+
+msgid "UpdateHOST"
+msgstr "更新主机"

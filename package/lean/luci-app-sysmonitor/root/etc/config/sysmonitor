@@ -1,0 +1,87 @@
+config sysmonitor 'sysmonitor'
+	option enable '1'
+	option vpnsw '20'
+	option chkprog '63'
+	option prog '5'
+	option vpnenable '0'
+	option syslog '0'
+	option homeip '192.168.1.120'
+	option netmask '255.255.255.0'
+	option gatewayip '192.168.1.1'
+	option vpnip '192.168.1.1'
+	option dns 'NULL'
+	option ddns '0'
+	option ddnslog '0'
+	option ipsec '0'
+	option pptp '0'
+	option dhcp '0'
+	list vpn '192.168.1.1'
+	list dnslist '119.29.29.29'
+	list dnslist '223.5.5.5'
+	option firmware 'https://github.com/softeduscn/openwrt1907-4300/releases/download/WNDR-4300/openwrt-ar71xx-nand-wndr4300-squashfs-sysupgrade.tar'
+
+config host_list
+	option hostname 'MAST'
+	option hostip '192.168.1.119'
+
+config host_list
+	option hostname 'HOME'
+	option hostip '192.168.1.120'
+
+config ddns_list
+	option iptype 'ip6'
+	option url 'http://api.dynu.com/nic/update'
+	option username 'sqmshcn'
+	option password 'dynuddns'
+	option hostname 'homecn.ddnsfree.com'
+	option getip 'cat /www/ip6.html'
+	option ipaddr ''
+	
+config ddns_list
+	option url 'http://api.dynu.com/nic/update'
+	option username 'sqmshcn'
+	option password 'dynuddns'
+	option hostname 'homecn.ddnsfree.com'
+	option iptype 'ip4'
+	option getip 'curl -s --connect-timeout 1 http://members.3322.org/dyndns/getip'
+	option ipaddr ''
+	
+config ddns_list
+	option iptype 'ip6'
+	option url 'http://api.dynu.com/nic/update'
+	option username 'sqmshcn'
+	option password 'dynuddns'
+	option hostname 'mastcn.ddnsfree.com'
+	option getip 'curl -s --connect-timeout 1 http://mast/ip6.html'
+	option ipaddr ''
+config ddns_list
+	option url 'http://api.dynu.com/nic/update'
+	option username 'sqmshcn'
+	option password 'dynuddns'
+	option hostname 'mastcn.ddnsfree.com'
+	option iptype 'ip4'
+	option getip 'curl -s --connect-timeout 1 http://members.3322.org/dyndns/getip'
+	option ipaddr ''
+	option ipaddr ''
+		
+config prog_list
+	option program 'updatehost'
+	option cycle '55'
+	option first '25'
+	option path '/usr/share/sysmonitor/sysapp.sh'
+	option name '更新主机'
+
+config prog_list
+	option program 'updateregvpn'
+	option cycle '60'
+	option first '55'
+	option path '/usr/share/sysmonitor/sysapp.sh'
+	option name '更新VPN'
+
+config prog_list
+	option program 'chkvpn'
+	option cycle '65'
+	option first '120'
+	option path '/usr/share/sysmonitor/sysapp.sh'
+	option name '检测VPN'
+

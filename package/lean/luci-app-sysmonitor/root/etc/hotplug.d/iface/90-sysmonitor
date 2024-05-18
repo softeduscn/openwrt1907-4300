@@ -1,0 +1,3 @@
+[ $INTERFACE = wan6 ] && touch /tmp/wan6.sign
+[ $INTERFACE = wan ] && touch /tmp/wan.sign
+

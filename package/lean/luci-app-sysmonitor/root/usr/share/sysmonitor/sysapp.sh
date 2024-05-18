@@ -118,7 +118,7 @@ chk_vpn() {
 			if [ "$(uci get network.wan.gateway)" == $vpnip ]; then
 				status=$(curl_url www.google.com)
 				if [ "$status" == 0 ]; then
-					echo '2-next_vpn'|nc -nc $vpnip 55556
+					echo '2-next_vpn'|netcat -nc $vpnip 55556
 					vpn1=$(echo $vpn|sed "s|-1-|-0-|g")
 				else
 					vpn1=$(echo $vpn|sed "s|-0-|-1-|g")
@@ -599,7 +599,7 @@ updatehost() {
 			sed -i "s|$vpn|$vpn1|g" $file
 #			vpnupdate=1
 #		else
-#			echo '1-regvpn'|nc -nc $i 55556
+#			echo '1-regvpn'|netcat -nc $i 55556
 		fi
 	done
 	if [ "$vpnupdate" == 1 ]; then
@@ -622,7 +622,7 @@ updatevpn() {
 			sed -i "s|$vpn|$vpn1|g" $file
 			vpnupdate=1
 		else
-			echo '2-next_vpn'|nc -nc $i 55556
+			echo '2-next_vpn'|netcat -nc $i 55556
 		fi
 	done
 	touch /tmp/updatevpn

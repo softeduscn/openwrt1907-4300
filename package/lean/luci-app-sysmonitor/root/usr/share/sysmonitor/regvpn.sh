@@ -34,7 +34,7 @@ sys_exit() {
 
 file='/tmp/regvpn'
 while [ "1" == "1" ]; do
-	regvpn=$(nc -lnp 55555)
+	regvpn=$(netcat -lnp 55555)
 	func=${regvpn:0:1}
 	regvpn=${regvpn:1}
 	case $func in

@@ -410,7 +410,7 @@ prog_list)
 	button='<font color="#3E1A66">'
 	while read i
 	do
-		button=$button' '$i'<BR>'
+		[ "$(echo $i|cut -d' ' -f2)" != 'chkprog' ] && button=$button' '$i'<BR>'
 	done < /tmp/delay.list
 	button=$button'</font>'
 	;;

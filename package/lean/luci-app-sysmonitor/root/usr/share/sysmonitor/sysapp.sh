@@ -407,12 +407,12 @@ prog)
 	done
 	;;
 prog_list)
-	button='<font color="#3E1A66">'
+	button='<B><font color="#3E1A66">'
 	while read i
 	do
 		[ "$(echo $i|cut -d' ' -f2)" != 'chkprog' ] && button=$button' '$i'<BR>'
 	done < /tmp/delay.list
-	button=$button'</font>'
+	button=$button'</font></B>'
 	;;
 vpn_list)
 	button='<button class=button1 title="Close VPN"><a href="/cgi-bin/luci/admin/sys/sysmonitor/sys?sys=CloseVPN&redir=host">CloseVPN</a></button><BR><BR>'
@@ -422,13 +422,13 @@ vpn_list)
 		ip=$(echo ${i:1}|cut -d'-' -f1)
 		status=$(echo $i|cut -d'-' -f3)
 		host=$(echo $i|cut -d'-' -f2)
-		color='grey'
+		color='#3D3476'
 		[ "$gateway" == $ip ] && color=green
 		[ "$status" == 0 ] && color='red'
-		button=$button'<a href="http://'$host'" target="_blank">'$(echo $i|cut -d'-' -f1-2)
-		button=$button'<font color='$color'>'
-		button=$button' '$(echo $i|cut -d'-' -f4-)'</font></a>'
-		[ "$color" == 'grey' ] && button=$button' <button class="button1" title="Select '$host' for VPN service"><a href="/cgi-bin/luci/admin/sys/sysmonitor/sys?sys=selVPN&redir=host&sys1='$ip'">Sel->'$host'</a></button>'
+		button=$button'<button class="button1" title="Goto '$host' setting"><a href="http://'$host'" target="_blank">Goto ->'$host'</a></button> '
+		button=$button'<B><font color='$color'>'
+		button=$button$(echo ${i:1}|cut -d'-' -f1)' '$(echo $i|cut -d'-' -f4-)'</font></B>'
+		[ "$color" == '#3D3476' ] && button=$button' <button class="button1" title="Select '$host' for VPN service"><a href="/cgi-bin/luci/admin/sys/sysmonitor/sys?sys=selVPN&redir=host&sys1='$ip'">Sel->'$host'</a></button>'
 		button=$button'<BR>'
 	done < /tmp/regvpn
 	;;

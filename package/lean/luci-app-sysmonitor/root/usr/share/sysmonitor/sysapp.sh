@@ -437,11 +437,11 @@ lan)
 	;;
 wantitle)
 	button=''
-	gateway=$(uci get network.wan.gateway)
-	vpn=$(uci_get_by_name $NAME $NAME vpnip '192.168.1.1')
-	if [ "$vpn" == $gateway ]; then
-		button='<button class=button1 title="Close VPN"><a href="/cgi-bin/luci/admin/sys/sysmonitor/sys?sys=CloseVPN&redir=settings">CloseVPN</a></button>'
-	fi
+#	gateway=$(uci get network.wan.gateway)
+#	vpn=$(uci_get_by_name $NAME $NAME vpnip '192.168.1.1')
+#	if [ "$vpn" == $gateway ]; then
+#		button='<button class=button1 title="Close VPN"><a href="/cgi-bin/luci/admin/sys/sysmonitor/sys?sys=CloseVPN&redir=settings">CloseVPN</a></button>'
+#	fi
 	;;
 wan)
 	ip=$(cat /www/ip.html)
@@ -455,6 +455,7 @@ wan)
 		vpn=$(cat /tmp/regvpn|grep $vpnip|cut -d'-' -f3-)
 		vpn=${vpn:2}
 		button=$button'<BR><font color=green>'$name'-'$vpn'</font>'
+		button=$button' <button class=button1 title="Close VPN"><a href="/cgi-bin/luci/admin/sys/sysmonitor/sys?sys=CloseVPN&redir=settings">CloseVPN</a></button>'
 	else
 		button=$button'<font color=6699cc>gateway:'$(uci get network.wan.gateway)' </font><font color=9699cc>dns:'$(uci get network.wan.dns)'</font>'
 	fi
@@ -479,7 +480,7 @@ vpns)
 			name=$(echo ${i:1}|cut -d'-' -f3-)
 			sign=${name:0:1}
 			name=${name:2}
-			color='grey'
+			color='#3D3476'
 			[ "$sign" == 0 ] && color='red'
 			button=$button'<button class="button1" title="Goto '$host' setting"><a href="http://'$host'" target="_blank">Goto ->'$host'</a></button> '
 			if [ "$gateway" == $ip ]; then

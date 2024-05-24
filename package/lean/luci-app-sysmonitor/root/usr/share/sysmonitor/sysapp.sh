@@ -357,6 +357,9 @@ stopdl() {
 }
 
 firmware() {
+	num=$(cat $SYSLOG|wc -l)
+	num=$((num-2))
+	[ "$num" -gt 0 ] && sed -i "1,${num}d" $SYSLOG
 	[ ! -d "/tmp/upload" ] && mkdir /tmp/upload
 	cd /tmp/upload
 	stopdl
@@ -364,22 +367,27 @@ firmware() {
 	[ "$1" != '' ] && firmware=$1
 	echolog "Download Firmware:"$tmp"..."
 	echolog "If download slowly,please use vpn!!!"
+	echo '------------------------------------------------------------------------------------------------------' >> $SYSLOG
 	echolog ""
 	wget  --no-check-certificate -c $firmware -O $tmp >> $SYSLOG 2>&1
 	if [ $? == 0 ]; then
 		sed -i '/Download Firmware/a\ ' $SYSLOG
+		sed -i '/Download Firmware/a\********************************************* ' $SYSLOG
 		sed -i '/Download Firmware/a\****** Download Firmware is OK.Please Upgrade '$tmp $SYSLOG
 		sed -i '/Download Firmware/a\ ' $SYSLOG
 	else
 		[ -f /tmp/upload/$tmp ] && rm /tmp/upload/$tmp
 		sed -i '/Download Firmware/,$d' $SYSLOG
 		echolog "Download Firmware is error! please use vpn & try again."
+		echo '------------------------------------------------------------------------------------------------------' >> $SYSLOG
 	fi
 }
 
 sysupgrade() {
 	file=$(ls /tmp/upload|grep $device)
 	if [ -n "$file" ]; then
+		file1="/usr/lib/lua/luci/view/sysmonitor/log.htm"
+		sed -i "/cbi-button/d" $file1
 		if [ "$1" == "-c" ]; then
 			echo 'Upgrade Firmware (keep config)' > $SYSLOG
 		else

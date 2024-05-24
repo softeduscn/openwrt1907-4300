@@ -23,18 +23,15 @@ function index()
 	entry({"admin", "sys", "sysmonitor", "vpn_status"}, call("action_vpn_status"))
 	entry({"admin", "sys", "sysmonitor", "prog_status"}, call("action_prog_status"))
 	entry({"admin", "sys", "sysmonitor", "service_button"}, call("service_button"))
-	entry({"admin", "sys", "sysmonitor", "firmware"}, call("firmware"))
-	entry({"admin", "sys", "sysmonitor", "stopDL"}, call("stopDL"))
-	entry({"admin", "sys", "sysmonitor", "sysupgrade"}, call("sysupgrade"))
 	entry({"admin", "sys", "sysmonitor", "hosts"}, call("hosts"))
+	entry({"admin", "sys", "sysmonitor", "sysmenu"}, call("sysmenu"))
+	entry({"admin", "sys", "sysmonitor", "sysmenu1"}, call("sysmenu1"))
 
 	entry({"admin", "sys", "sysmonitor", "get_log"}, call("get_log"))
 	entry({"admin", "sys", "sysmonitor", "clear_log"}, call("clear_log"))
 	entry({"admin", "sys", "sysmonitor", "wg_users"}, call("wg_users"))
 	entry({"admin", "sys", "sysmonitor", "vpnlist"}, call("vpnlist"))
 	entry({"admin", "sys", "sysmonitor", "proglist"}, call("proglist"))
-	entry({"admin", "sys", "sysmonitor", "sys"}, call("sys")).leaf = true
-	entry({"admin", "sys", "sysmonitor", "prog"}, call("prog")).leaf = true
 end
 
 function action_vpn_status()
@@ -72,12 +69,6 @@ function proglist()
 	luci.http.write(luci.sys.exec("/usr/share/sysmonitor/sysapp.sh sysbutton prog_list"))
 end
 
-function prog()
-	prog=luci.http.formvalue("prog")
-	luci.sys.exec("/usr/share/sysmonitor/sysapp.sh sysmenu "..prog)
-	luci.http.redirect(luci.dispatcher.build_url("admin", "sys", "sysmonitor","general"))
-end
-
 function action_wireguard_status()
 	luci.http.prepare_content("application/json")
 	luci.http.write_json({
@@ -108,34 +99,21 @@ function vpnlist()
 	luci.http.write(luci.sys.exec("/usr/share/sysmonitor/sysapp.sh sysbutton vpn_list"))
 end
 
-function sys()
-	sys=luci.http.formvalue("sys")
-	redir=luci.http.formvalue("redir")
-	if ( sys == "selVPN" ) then
-		sys1=luci.http.formvalue("sys1")
-		luci.sys.exec("/usr/share/sysmonitor/sysapp.sh sysmenu "..sys..' '..sys1)
-	else
-		luci.sys.exec("/usr/share/sysmonitor/sysapp.sh sysmenu "..sys)
-	end
-	luci.http.redirect(luci.dispatcher.build_url("admin", "sys", "sysmonitor",redir))
-end
-
-function firmware()
-	luci.http.redirect(luci.dispatcher.build_url("admin", "sys", "sysmonitor", "log"))
-	luci.sys.exec("/usr/share/sysmonitor/sysapp.sh firmware")
-end
-
-function stopDL()
-	luci.http.redirect(luci.dispatcher.build_url("admin", "sys", "sysmonitor", "log"))
-	luci.sys.exec("/usr/share/sysmonitor/sysapp.sh stopdl")
-end
-
-function sysupgrade()
-	sys=luci.http.formvalue("sys")
-	luci.http.redirect(luci.dispatcher.build_url("admin", "sys", "sysmonitor", "log"))	
-	luci.sys.exec("/usr/share/sysmonitor/sysapp.sh sysupgrade "..sys)
-end
-
 function hosts()
 	luci.http.redirect(luci.dispatcher.build_url("admin", "network", "hosts"))
+end
+
+function sysmenu()
+	sys=luci.http.formvalue("sys")
+	redir=luci.http.formvalue("redir")
+	luci.http.redirect(luci.dispatcher.build_url("admin", "sys", "sysmonitor", redir))
+	luci.sys.exec("/usr/share/sysmonitor/sysapp.sh sysmenu "..sys)
+end
+
+function sysmenu1()
+	sys=luci.http.formvalue("sys")
+	sys1=luci.http.formvalue("sys1")
+	redir=luci.http.formvalue("redir")
+	luci.http.redirect(luci.dispatcher.build_url("admin", "sys", "sysmonitor", redir))
+	luci.sys.exec("/usr/share/sysmonitor/sysapp.sh sysmenu "..sys.." "..sys1)
 end

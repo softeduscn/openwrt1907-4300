@@ -546,7 +546,7 @@ sysmenu() {
 		firmware
 		;;
 	sysupgrade)
-		sysupgrade
+		sysupgrade $2
 		;;
 	ShowProg)
 		file='/usr/lib/lua/luci/view/sysmonitor/prog.htm'

@@ -396,7 +396,7 @@ sysupgrade() {
 		echo '------------------------------------------------------------------------------------------------------' >> $SYSLOG
 		sysupgrade='sysupgrade '$1' /tmp/upload/'$file
 		echo $sysupgrade >> $SYSLOG
-		$sysupgrade
+		echo '5='$sysupgrade >> /tmp/delay.sign
 	else
 		sed -i '/Download Firmware/,$d' $SYSLOG
 		echolog "Download Firmware"

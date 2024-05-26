@@ -25,7 +25,6 @@ function index()
 	entry({"admin", "sys", "sysmonitor", "service_button"}, call("service_button"))
 	entry({"admin", "sys", "sysmonitor", "hosts"}, call("hosts"))
 	entry({"admin", "sys", "sysmonitor", "sysmenu"}, call("sysmenu"))
-	entry({"admin", "sys", "sysmonitor", "sysmenu1"}, call("sysmenu1"))
 
 	entry({"admin", "sys", "sysmonitor", "get_log"}, call("get_log"))
 	entry({"admin", "sys", "sysmonitor", "clear_log"}, call("clear_log"))
@@ -104,13 +103,6 @@ function hosts()
 end
 
 function sysmenu()
-	sys=luci.http.formvalue("sys")
-	redir=luci.http.formvalue("redir")
-	luci.http.redirect(luci.dispatcher.build_url("admin", "sys", "sysmonitor", redir))
-	luci.sys.exec("/usr/share/sysmonitor/sysapp.sh sysmenu "..sys)
-end
-
-function sysmenu1()
 	sys=luci.http.formvalue("sys")
 	sys1=luci.http.formvalue("sys1")
 	redir=luci.http.formvalue("redir")

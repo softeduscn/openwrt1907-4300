@@ -455,7 +455,7 @@ vpn_list)
 		button=$button'<button class="button1" title="Goto '$host' setting"><a href="http://'$host'" target="_blank">Goto ->'$host'</a></button> '
 		button=$button'<B><font color='$color'>'
 		button=$button$(echo ${i:1}|cut -d'-' -f1)' '$(echo $i|cut -d'-' -f4-)'</font></B>'
-		[ "$color" == '#3D3476' ] && button=$button' <button class="button1" title="Select '$host' for VPN service"><a href="/cgi-bin/luci/admin/sys/sysmonitor/sysmenu?sys=selVPN&redir=host&sys1='$ip'">Sel->'$host'</a></button>'
+		[ "$color" == '#3D3476' ] && button=$button' <button class="button1" title="Select '$host' for VPN service"><a href="/cgi-bin/luci/admin/sys/sysmonitor/sysmenu?sys=selVPN&sys1='$ip'&redir=host">Sel->'$host'</a></button>'
 		button=$button'<BR>'
 	done < /tmp/regvpn
 	;;
@@ -516,7 +516,7 @@ vpns)
 				button=$button'<BR>'
 			else
 				button=$button'<font color='$color'>'$ip'-'$host'-'$name'</font> '
-				button=$button'<button class="button1" title="Select '$host' for VPN service"><a href="/cgi-bin/luci/admin/sys/sysmonitor/sysmenu?sys=selVPN&redir=settings&sys1='$ip'">Sel->'$host'</a></button><BR>'
+				button=$button'<button class="button1" title="Select '$host' for VPN service"><a href="/cgi-bin/luci/admin/sys/sysmonitor/sysmenu?sys=selVPN&sys1='$ip'&redir=settings">Sel->'$host'</a></button><BR>'
 			fi
 		fi
 	done < /tmp/regvpn

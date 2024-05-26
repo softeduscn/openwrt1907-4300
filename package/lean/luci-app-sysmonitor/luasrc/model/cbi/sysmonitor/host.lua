@@ -42,7 +42,7 @@ m = Map(appname,translate("HOST Settings"))
 set_apply_on_parse(m)
 
 s = m:section(TypedSection, "sysmonitor", "")
-s.description = '<table><style>.button1 {-webkit-transition-duration: 0.4s;transition-duration: 0.4s;padding: 1px 3px;text-align: center;background-color: white;color: black;border: 2px solid #4CAF50;border-radius:5px;}.button1:hover {background-color: #4CAF50;color: white;}.button1 {font-size: 11px;}</style><tr><td><button class="button1"  title="Update Hostnames"><a href="/cgi-bin/luci/admin/sys/sysmonitor/sys?sys=UpdateHOST&redir=hosts" target="_blank">'..translate("UpdateHOST")..'</a></button> <button class="button1"  title="Goto Hostnames"><a href="/cgi-bin/luci/admin/network/hosts" target="_blank"> ' .. translate("Hostnames") .. ' </a></button></td></tr></table>'
+s.description = '<table><style>.button1 {-webkit-transition-duration: 0.4s;transition-duration: 0.4s;padding: 1px 3px;text-align: center;background-color: white;color: black;border: 2px solid #4CAF50;border-radius:5px;}.button1:hover {background-color: #4CAF50;color: white;}.button1 {font-size: 11px;}</style><tr><td><button class="button1"  title="Update Hostnames"><a href="/cgi-bin/luci/admin/sys/sysmonitor/sysmenu?sys=UpdateHOST&redir=hosts" target="_blank">'..translate("UpdateHOST")..'</a></button> <button class="button1"  title="Goto Hostnames"><a href="/cgi-bin/luci/admin/network/hosts" target="_blank"> ' .. translate("Hostnames") .. ' </a></button></td></tr></table>'
 s.anonymous = true
 
 s = m:section(TypedSection, "host_list", "", translate(""))

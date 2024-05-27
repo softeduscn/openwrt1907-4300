@@ -146,7 +146,7 @@ firstrun() {
 	getip
 	echo '30=/usr/share/sysmonitor/sysapp.sh killtmp' >> /tmp/delay.sign
 	#modify opkg source
-	sed -i 's_downloads.openwrt.org_mirrors.aliyun.com/openwrt_' /etc/opkg/distfeeds.conf
+	sed -i 's_downloads.openwrt.org_mirrors.cloud.tencent.com/openwrt_' /etc/opkg/distfeeds.conf
 	sed -i "s/-SNAPSHOT/.10/g" /etc/opkg/distfeeds.conf
 }
 
@@ -386,8 +386,6 @@ firmware() {
 sysupgrade() {
 	file=$(ls /tmp/upload|grep $device)
 	if [ -n "$file" ]; then
-		file1="/usr/lib/lua/luci/view/sysmonitor/log.htm"
-		sed -i "/cbi-button/d" $file1
 		if [ "$1" == "-c" ]; then
 			echo 'Upgrade Firmware (keep config)' > $SYSLOG
 		else
@@ -396,6 +394,7 @@ sysupgrade() {
 		echo '------------------------------------------------------------------------------------------------------' >> $SYSLOG
 		sysupgrade='sysupgrade '$1' /tmp/upload/'$file
 		echo $sysupgrade >> $SYSLOG
+		touch /tmp/sysupgrade
 		echo '5='$sysupgrade >> /tmp/delay.sign
 	else
 		sed -i '/Download Firmware/,$d' $SYSLOG
@@ -844,8 +843,8 @@ logup)
 #	fi
 	file="/usr/lib/lua/luci/view/sysmonitor/log.htm"
 	sed -i "/cbi-button/d" $file
-#	sed -i "/keeps/d" $file
 	redir='log'
+	if [ ! -f /tmp/sysupgrade ]; then
 	if [ "$status" != 0 ]; then
 #		sed -i "/user_fieldset/a\\\t<label for='keeps'><%:Keeps%></label>" $file
 #		sed -i "/user_fieldset/a\\\t<input type='checkbox' id='keeps' name='keeps' />" $file
@@ -857,6 +856,7 @@ logup)
 	else
 		sed -i "/user_fieldset/a\\\t<input class='cbi-button cbi-input-apply' type='button' onclick=location.href='sysmenu?sys=firmware&sys1=&redir="$redir"' value='<%:Download Firmware%>' />" $file
 		sed -i "/user_fieldset/a\\\t<input class='cbi-button cbi-input-apply' type='button' onclick='clearlog()' name='clean log' value='<%:Clear logs%>' />" $file
+	fi
 	fi
 	;;
 chk_vpn)

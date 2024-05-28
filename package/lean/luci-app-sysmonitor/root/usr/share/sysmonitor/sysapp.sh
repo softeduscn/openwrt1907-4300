@@ -441,7 +441,8 @@ prog_list)
 	button=$button'</font></B>'
 	;;
 vpn_list)
-	button='<button class=button1 title="Close VPN"><a href="/cgi-bin/luci/admin/sys/sysmonitor/sysmenu?sys=CloseVPN&sys1=&redir=host">CloseVPN</a></button><BR><BR>'
+	button='<button class=button1 title="Close VPN"><a href="/cgi-bin/luci/admin/sys/sysmonitor/sysmenu?sys=CloseVPN&sys1=&redir=host">CloseVPN</a></button>'
+	button=$button' <button class="button1" title="Update VPN connection"><a href="/cgi-bin/luci/admin/sys/sysmonitor/sysmenu?sys=UpdateVPN&sys1=&redir=host">UpdateVPN</a></button><BR><BR>'
 	gateway=$(uci get network.wan.gateway)
 	while read i
 	do

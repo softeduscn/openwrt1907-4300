@@ -284,12 +284,21 @@ while [ "1" == "1" ]; do
 		prog='regvpn chkvpn'
 		for i in $prog
 		do
-			progsh=$i'.sh'	
-			if [ ! -n "$(pgrep -f $progsh)" ]; then
+			progsh=$i'.sh'
+			arg=$(pgrep -f $progsh|wc -l)
+			case $arg in
+				0)
 				progrun='/tmp/'$i'.run'
 				[ -f $progrun ] && rm $progrun
 				$APP_PATH/$progsh &
-			fi
+				;;
+				1)
+				progrun='/tmp/'$i'.run'
+				;;
+				*)
+				killall $progsh
+				;;
+			esac
 		done
 		if [ -f /tmp/wan6.sign ]; then
 			rm /tmp/wan6.sign

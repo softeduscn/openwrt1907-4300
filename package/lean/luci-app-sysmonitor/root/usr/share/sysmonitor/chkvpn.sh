@@ -1,6 +1,8 @@
 #!/bin/bash
 
 [ -f /tmp/chkvpn.run ] && exit
+[ ! -f /tmp/chkvpn.pid ] && echo 0 >/tmp/chkvpn.pid
+[ "$(cat /tmp/chkvpn.pid)" != 0 ] && exit
 
 touch /tmp/chkvpn.run
 NAME=sysmonitor
@@ -27,6 +29,9 @@ uci_set_by_name() {
 sys_exit() {
 	#echolog "chkVPN is off."
 	[ -f /tmp/chkvpn.run ] && rm -rf /tmp/chkvpn.run
+	syspid=$(cat /tmp/chkvpn.pid)
+	syspid=$((syspid-1))
+	echo $syspid > /tmp/chkvpn.pid
 	exit 0
 }
 
@@ -43,6 +48,9 @@ if [ -f /tmp/firstrun ]; then
 fi
 
 #echolog "chkVPN is on."
+syspid=$(cat /tmp/chkvpn.pid)
+syspid=$((syspid+1))
+echo $syspid > /tmp/chkvpn.pid
 while [ "1" == "1" ]; do
 	[ "$(cat /tmp/sysmonitor.pid)" -gt 1 ] && $APP_PATH/sysapp.sh re_sysmonitor
 	prog='sysmonitor'
@@ -52,6 +60,7 @@ while [ "1" == "1" ]; do
 		if [ ! -n "$(pgrep -f $progsh)" ]; then
 			progrun='/tmp/'$i'.run'
 			[ -f $progrun ] && rm $progrun
+			[ -f /tmp/sysmonitor.pid ] && rm /tmp/sysmonitor.pid
 			$APP_PATH/$progsh &
 		fi
 	done
@@ -90,5 +99,6 @@ while [ "1" == "1" ]; do
 		}
 	chk_sign regvpn.sign reg_vpn
 	[ ! -f /tmp/chkvpn.run ] && sys_exit
+	[ "$(cat /tmp/chkvpn.pid)" -gt 1 ] && sys_exit
 	sleep 1
 done

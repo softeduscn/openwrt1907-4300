@@ -1,8 +1,10 @@
 #!/bin/bash
 
 [ -f /tmp/regvpn.run ] && exit
-touch /tmp/regvpn.run
+[ ! -f /tmp/regvpn.pid ] && echo 0 >/tmp/regvpn.pid
+[ "$(cat /tmp/regvpn.pid)" != 0 ] && exit
 
+touch /tmp/regvpn.run
 NAME=sysmonitor
 APP_PATH=/usr/share/$NAME
 SYSLOG='/var/log/sysmonitor.log'
@@ -27,11 +29,16 @@ uci_set_by_name() {
 sys_exit() {
 	#echolog "regVPN is off."
 	[ -f /tmp/regvpn.run ] && rm -rf /tmp/regvpn.run
+	syspid=$(cat /tmp/regvpn.pid)
+	syspid=$((syspid-1))
+	echo $syspid > /tmp/regvpn.pid
 	exit 0
 }
 
 #echolog "regVPN is on."
-
+syspid=$(cat /tmp/regvpn.pid)
+syspid=$((syspid+1))
+echo $syspid > /tmp/regvpn.pid
 file='/tmp/regvpn'
 while [ "1" == "1" ]; do
 	regvpn=$(netcat -lnp 55555)
@@ -55,4 +62,5 @@ while [ "1" == "1" ]; do
 			;;
 	esac
  	[ ! -f /tmp/regvpn.run ] && sys_exit
+ 	[ "$(cat /tmp/regvpn.pid)" -gt 1 ] && sys_exit
 done

@@ -285,20 +285,13 @@ while [ "1" == "1" ]; do
 		for i in $prog
 		do
 			progsh=$i'.sh'
-			arg=$(pgrep -f $progsh|wc -l)
-			case $arg in
-				0)
+			if [ "$(pgrep -f $progsh|wc -l)" == 0 ]; then
 				progrun='/tmp/'$i'.run'
+				progpid='/tmp/'$i'.pid'
 				[ -f $progrun ] && rm $progrun
+				[ -f $progpid ] && rm $progpid
 				$APP_PATH/$progsh &
-				;;
-				1)
-				progrun='/tmp/'$i'.run'
-				;;
-				*)
-				killall $progsh
-				;;
-			esac
+			fi
 		done
 		if [ -f /tmp/wan6.sign ]; then
 			rm /tmp/wan6.sign

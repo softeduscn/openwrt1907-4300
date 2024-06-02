@@ -286,9 +286,11 @@ while [ "1" == "1" ]; do
 		do
 			progsh=$i'.sh'
 			progpid='/tmp/'$i'.pid'
+			[ ! -f $progpid ] && echo 0 > $progpid
 			arg=$(cat $progpid)
 			case $arg in
 				0)
+					[ "$(pgrep -f $progsh|wc -l)" != 0 ] && killall $progsh
 					progrun='/tmp/'$i'.run'
 					[ -f $progrun ] && rm $progrun
 					[ -f $progpid ] && rm $progpid
@@ -298,6 +300,7 @@ while [ "1" == "1" ]; do
 					;;
 				*)
 					killall $progsh
+					echo 0 > $progpid
 					;;
 			esac	
 		done

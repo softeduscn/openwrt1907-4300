@@ -433,12 +433,16 @@ prog)
 	done
 	;;
 prog_list)
-	button='<B><font color="#3E1A66">'
+	button='<B>'
 	while read i
 	do
-		[ "$(echo $i|cut -d' ' -f2)" != 'chkprog' ] && button=$button' '$i'<BR>'
+		color='MediumAquamarine'
+		timeid=$(echo $i|cut -d'=' -f1)
+		[ "$timeid" -le 30 ] && color='MediumSeaGreen '
+		[ "$timeid" -le 15 ] && color='Green '
+		[ "$(echo $i|cut -d' ' -f2)" != 'chkprog' ] && button=$button' <font color='$color'>'$i'</font><BR>'
 	done < /tmp/delay.list
-	button=$button'</font></B>'
+	button=$button'</B>'
 	;;
 vpn_list)
 	button='<button class=button1 title="Close VPN"><a href="/cgi-bin/luci/admin/sys/sysmonitor/sysmenu?sys=CloseVPN&sys1=&redir=host">CloseVPN</a></button>'

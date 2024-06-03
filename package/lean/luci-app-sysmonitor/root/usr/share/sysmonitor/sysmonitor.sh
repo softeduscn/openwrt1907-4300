@@ -286,6 +286,7 @@ while [ "1" == "1" ]; do
 		do
 			progsh=$i'.sh'
 			progpid='/tmp/'$i'.pid'
+			[ "$(pgrep -f $progsh|wc -l)" == 0 ] && echo 0 > $progpid
 			[ ! -f $progpid ] && echo 0 > $progpid
 			arg=$(cat $progpid)
 			case $arg in

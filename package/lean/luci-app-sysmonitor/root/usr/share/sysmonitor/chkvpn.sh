@@ -52,17 +52,29 @@ syspid=$(cat /tmp/chkvpn.pid)
 syspid=$((syspid+1))
 echo $syspid > /tmp/chkvpn.pid
 while [ "1" == "1" ]; do
-	[ "$(cat /tmp/sysmonitor.pid)" -gt 1 ] && $APP_PATH/sysapp.sh re_sysmonitor
 	prog='sysmonitor'
 	for i in $prog
 	do
-		progsh=$i'.sh'	
-		if [ ! -n "$(pgrep -f $progsh)" ]; then
-			progrun='/tmp/'$i'.run'
-			[ -f $progrun ] && rm $progrun
-			[ -f /tmp/sysmonitor.pid ] && rm /tmp/sysmonitor.pid
-			$APP_PATH/$progsh &
-		fi
+		progsh=$i'.sh'
+		progpid='/tmp/'$i'.pid'
+		[ "$(pgrep -f $progsh|wc -l)" == 0 ] && echo 0 > $progpid
+		[ ! -f $progpid ] && echo 0 > $progpid
+		arg=$(cat $progpid)
+		case $arg in
+			0)
+				[ "$(pgrep -f $progsh|wc -l)" != 0 ] && killall $progsh
+				progrun='/tmp/'$i'.run'
+				[ -f $progrun ] && rm $progrun
+				[ -f $progpid ] && rm $progpid
+				$APP_PATH/$progsh &
+				;;
+			1)
+				;;
+			*)
+				killall $progsh
+				echo 0 > $progpid
+				;;
+		esac	
 	done
 	[ $(cat /tmp/delay.list|grep chkprog|wc -l) == 0 ] && $APP_PATH/sysapp.sh chkprog
 	if [ -f /tmp/delay.sign ]; then

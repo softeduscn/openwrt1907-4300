@@ -316,37 +316,6 @@ setdns() {
 	fi
 }
 
-re_sysmonitor() {
-arg=$(cat /tmp/sysmonitor.pid)
-case $arg in
-	0)
-		[ -n "$(pgrep -f sysmonitor.sh)" ] && arg=2
-		;;
-	*)
-		[ ! -n "$(pgrep -f sysmonitor.sh)" ] && arg=0
-		;;
-esac
-case $arg in
-	0)
-		[ -f /tmp/sysmonitor.run ] && rm -rf /tmp/sysmonitor.run
-		echo 0 > /tmp/sysmonitor.pid
-		[ "$(uci_get_by_name $NAME $NAME enable 1)" == 1 ] && /usr/share/sysmonitor/monitor.sh
-		;;
-	1)
-		#echo "Update sysmonitor."
-		touch /tmp/sysmonitor
-		;;
-	*)
-		echo "Killed sysmonitor & restart it!"
-		[ "$(uci_get_by_name $NAME $NAME syslog)" == 1 ] && echolog "sysmonitor is killed & start!"
-		killall sysmonitor.sh
-		[ -f /tmp/sysmonitor.run ] && rm /tmp/sysmonitor.run
-		echo 0 > /tmp/sysmonitor.pid
-		[ "$(uci_get_by_name $NAME $NAME enable 1)" == 1 ] && /usr/share/sysmonitor/monitor.sh
-		;;
-esac
-}
-
 stopdl() {
 	sed -i '/Download Firmware/,$d' $SYSLOG
 	dl=$(pgrep -f MI-R3P)
@@ -763,10 +732,6 @@ sysmenu)
 sysbutton)
 	sysbutton $1
 	;;
-#re_sysmonitor)
-#	re_sysmonitor
-#	delay_prog re_sysmonitor 1800
-	;;
 updateregvpn)
 	delay_prog updateregvpn
 	update_regvpn
@@ -788,9 +753,6 @@ getddnsip)
 firstrun)
 	firstrun
 	;;
-#syscron)
-#	re_sysmonitor
-#	;;
 close_vpn)
 	close_vpn
 	;;

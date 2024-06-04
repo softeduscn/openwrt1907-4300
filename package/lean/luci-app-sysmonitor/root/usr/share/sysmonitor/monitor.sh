@@ -1,7 +1,7 @@
 #!/bin/bash
 
 [ "$(uci get sysmonitor.sysmonitor.enable)" == 0 ] && exit
-[ "$(pgrep -f $progsh|wc -l)" == 0 ] && echo 0 > /tmp/sysmonitor.pid
+[ "$(pgrep -f sysmonitor.sh|wc -l)" == 0 ] && echo 0 > /tmp/sysmonitor.pid
 [ -f /tmp/sysmonitor.run ] && exit
 
 NAME=sysmonitor

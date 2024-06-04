@@ -282,6 +282,7 @@ while [ "1" == "1" ]; do
 	[ "$check_time" -le 3 ] && check_time=3
 	chktime=$((check_time-1))
 	while [ $num -le $check_time ]; do
+		touch /tmp/test.$NAME
 		prog='regvpn chkvpn'
 		for i in $prog
 		do
@@ -299,6 +300,19 @@ while [ "1" == "1" ]; do
 					$APP_PATH/$progsh &
 					;;
 				1)
+					if [ "$i" == "regvpn" ]; then
+						case $num in
+							2)
+							[ -f /tmp/test.regvpn ] && rm /tmp/test.$i
+							ip=$(ip -o -4 addr list br-wan| cut -d ' ' -f7)
+							wanip=$(echo $ip|cut -d'/' -f1)
+							echo '2'$i'-test' |netcat -nc $wanip 55555
+							;;
+						$chktime)
+							[ ! -f /tmp/test.regvpn ] && killall regvpn.sh
+							;;
+						esac
+					fi
 					if [ "$i" == "chkvpn" ] && [ "$num" == $chktime ]; then
 						if [ ! -f /tmp/test.$i ]; then	
 							killall $progsh

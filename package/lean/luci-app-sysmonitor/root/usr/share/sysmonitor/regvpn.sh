@@ -57,8 +57,8 @@ while [ "1" == "1" ]; do
 			echo $reghost$regvpn >> $file
 #			sed -i '/^\s*$/d' $file
 			;;
-		2)
-			echo "vpn detieal"		
+		*)
+			echo $regvpn >/tmp/test.regvpn
 			;;
 	esac
  	[ ! -f /tmp/regvpn.run ] && sys_exit

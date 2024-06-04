@@ -303,13 +303,13 @@ while [ "1" == "1" ]; do
 					if [ "$i" == "regvpn" ]; then
 						case $num in
 							2)
-							[ -f /tmp/test.regvpn ] && rm /tmp/test.$i
+							[ -f /tmp/test.$i ] && rm /tmp/test.$i
 							ip=$(ip -o -4 addr list br-wan| cut -d ' ' -f7)
 							wanip=$(echo $ip|cut -d'/' -f1)
-							echo '2'$i'-test' |netcat -nc $wanip 55555
+							echo '9test-'$i |netcat -nc $wanip 55555
 							;;
 						$chktime)
-							[ ! -f /tmp/test.regvpn ] && killall regvpn.sh
+							[ ! -f /tmp/test.$i ] && killall $progsh
 							;;
 						esac
 					fi

@@ -52,7 +52,7 @@ syspid=$(cat /tmp/chkvpn.pid)
 syspid=$((syspid+1))
 echo $syspid > /tmp/chkvpn.pid
 while [ "1" == "1" ]; do
-	[ -f /tmp/test.chkvpn ] && rm /tmp/test.chkvpn
+	touch /tmp/test.chkvpn
 	prog='sysmonitor'
 	for i in $prog
 	do

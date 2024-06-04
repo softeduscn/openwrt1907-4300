@@ -280,6 +280,7 @@ while [ "1" == "1" ]; do
 	num=0
 	check_time=$(uci_get_by_name $NAME $NAME vpnsw 10)
 	[ "$check_time" -le 3 ] && check_time=3
+	chktime=$((check_time-1))
 	while [ $num -le $check_time ]; do
 		prog='regvpn chkvpn'
 		for i in $prog
@@ -298,6 +299,13 @@ while [ "1" == "1" ]; do
 					$APP_PATH/$progsh &
 					;;
 				1)
+					if [ "$i" == "chkvpn" ] && [ "$num" == $chktime ]; then
+						if [ ! -f /tmp/test.$i ]; then	
+							killall $progsh
+						else
+							rm /tmp/test.$i
+						fi
+					fi
 					;;
 				*)
 					killall $progsh

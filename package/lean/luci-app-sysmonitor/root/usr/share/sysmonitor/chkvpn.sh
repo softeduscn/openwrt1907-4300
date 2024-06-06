@@ -54,7 +54,7 @@ echo $syspid > /tmp/chkvpn.pid
 chknum=0
 while [ "1" == "1" ]; do
 	chknum=$((chknum+1))
-	touch /tmp/test.chkvpn
+	[ ! -f /tmp/test.chkvpn ] && touch /tmp/test.chkvpn
 	prog='sysmonitor'
 	for i in $prog
 	do

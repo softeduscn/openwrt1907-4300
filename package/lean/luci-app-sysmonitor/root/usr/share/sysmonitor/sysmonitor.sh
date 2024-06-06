@@ -282,7 +282,7 @@ while [ "1" == "1" ]; do
 	[ "$check_time" -le 3 ] && check_time=3
 	chktime=$((check_time-1))
 	while [ $num -le $check_time ]; do
-		touch /tmp/test.$NAME
+		[ ! -f /tmp/test.$NAME ]  && touch /tmp/test.$NAME
 		prog='regvpn chkvpn'
 		for i in $prog
 		do

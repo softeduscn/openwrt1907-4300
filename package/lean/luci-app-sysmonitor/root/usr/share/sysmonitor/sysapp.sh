@@ -317,7 +317,9 @@ setdns() {
 }
 
 stopdl() {
-	sed -i '/Download Firmware/,$d' $SYSLOG
+	[ -f /tmp/$NAME.log.tmp ] && cp /tmp/$NAME.log.tmp $SYSLOG
+	[ -f /tmp/$NAME.log.tmp ] && rm /tmp/$NAME.log.tmp
+	[ -f /tmp/sysupgrade ] && rm /tmp/sysupgrade
 	dl=$(pgrep -f MI-R3P)
 	[ -n "$dl" ] && kill $dl
 	firmware=$(uci_get_by_name $NAME $NAME firmware)
@@ -326,12 +328,10 @@ stopdl() {
 }
 
 firmware() {
-	num=$(cat $SYSLOG|wc -l)
-	num=$((num-2))
-	[ "$num" -gt 0 ] && sed -i "1,${num}d" $SYSLOG
 	[ ! -d "/tmp/upload" ] && mkdir /tmp/upload
 	cd /tmp/upload
 	stopdl
+	[ ! -f /tmp/$NAME.log.tmp ] && cp $SYSLOG /tmp/$NAME.log.tmp
 	firmware=$(uci_get_by_name $NAME $NAME firmware)
 	[ "$1" != '' ] && firmware=$1
 	echolog "Download Firmware:"$tmp"..."
@@ -369,6 +369,7 @@ sysupgrade() {
 		sed -i '/Download Firmware/,$d' $SYSLOG
 		echolog "Download Firmware"
 		echolog "No sysupgrade file? Please upload $device sysupgrade file or download."
+		echo '------------------------------------------------------------------------------------------------------' >> $SYSLOG
 	fi
 }
 

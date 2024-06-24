@@ -63,11 +63,6 @@ while [ "1" == "1" ]; do
 		[ "$(pgrep -f $progsh|wc -l)" == 0 ] && echo 0 > $progpid
 		[ ! -f $progpid ] && echo 0 > $progpid
 		arg=$(cat $progpid)
-		case $chknum in
-			59)
-				[ "$(pgrep -f $progsh|wc -l)" -gt 1 ] && killall $progsh
-				;;
-		esac
 		case $arg in
 			0)
 				[ "$(pgrep -f $progsh|wc -l)" != 0 ] && killall $progsh
@@ -77,12 +72,14 @@ while [ "1" == "1" ]; do
 				$APP_PATH/$progsh &
 				;;
 			1)
-				if [ "$i" == "sysmonitor" ] && [ "$chknum" == 60 ]; then
+				#if [ "$i" == "sysmonitor" ] && [ "$chknum" -ge 60 ]; then
+				if [ "$chknum" -ge 60 ]; then
 					chknum=0
 					if [ ! -f /tmp/test.$i ]; then	
 						killall $progsh
 					else
-						rm /tmp/test.$i	
+						rm /tmp/test.$i
+						[ "$(pgrep -f $progsh|wc -l)" -gt 1 ] && killall $progsh	
 					fi
 				fi
 				;;

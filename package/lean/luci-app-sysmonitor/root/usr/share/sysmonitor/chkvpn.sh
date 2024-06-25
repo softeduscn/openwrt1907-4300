@@ -52,6 +52,7 @@ syspid=$(cat /tmp/chkvpn.pid)
 syspid=$((syspid+1))
 echo $syspid > /tmp/chkvpn.pid
 chknum=0
+chksys=0
 while [ "1" == "1" ]; do
 	chknum=$((chknum+1))
 	[ ! -f /tmp/test.chkvpn ] && touch /tmp/test.chkvpn
@@ -79,7 +80,12 @@ while [ "1" == "1" ]; do
 						killall $progsh
 					else
 						rm /tmp/test.$i
-						[ "$(pgrep -f $progsh|wc -l)" -gt 1 ] && killall $progsh	
+						if [ "$(pgrep -f $progsh|wc -l)" -gt 1 ]; then
+							chksys=$((chksys+1))
+						else
+							chksys=0
+						fi
+						[ "$chksys" -ge 3 ] && killall $progsh	
 					fi
 				fi
 				;;

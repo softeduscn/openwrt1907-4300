@@ -85,7 +85,7 @@ while [ "1" == "1" ]; do
 						else
 							chksys=0
 						fi
-						[ "$chksys" -ge 3 ] && killall $progsh	
+						[ "$chksys" -ge 30 ] && killall $progsh	
 					fi
 				fi
 				;;

@@ -18,6 +18,7 @@ config sysmonitor 'sysmonitor'
 	list vpn '192.168.1.1'
 	list dnslist '119.29.29.29'
 	list dnslist '223.5.5.5'
+	list dnslist '180.76.76.76'
 	option firmware 'https://github.com/softeduscn/openwrt1907-4300/releases/download/WNDR-4300/openwrt-ar71xx-nand-wndr4300-squashfs-sysupgrade.tar'
 
 config host_list

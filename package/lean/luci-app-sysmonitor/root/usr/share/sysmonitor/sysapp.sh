@@ -51,6 +51,28 @@ ping_url() {
 	echo $status
 }
 
+test_url() {
+	local url=$1
+	local try=1
+	[ -n "$2" ] && try=$2
+	local timeout=2
+	[ -n "$3" ] && timeout=$3
+	local extra_params=$4
+	curl --help all | grep "\-\-retry-all-errors" > /dev/null
+	[ $? == 0 ] && extra_params="--retry-all-errors ${extra_params}"
+	status=$(/usr/bin/curl -I -o /dev/null -skL $extra_params --connect-timeout ${timeout} --retry ${try} -w %{http_code} "$url")
+	case "$status" in
+		404|204|\
+		200)
+			status=200
+		;;
+		*)
+			status=0
+		;;
+	esac
+	echo $status
+}
+
 curl_url() {
 	for i in $( seq 1 2 ); do
 		result=$(curl -s --connect-timeout 1 $1|grep google|wc -l)
@@ -116,7 +138,7 @@ chk_vpn() {
 			touch /tmp/sysmonitor
 		else
 			if [ "$(uci get network.wan.gateway)" == $vpnip ]; then
-				status=$(curl_url www.google.com)
+				status=$(ping_url www.google.com)
 				if [ "$status" == 0 ]; then
 					echo '2-next_vpn'|netcat -nc $vpnip 55556
 					vpn1=$(echo $vpn|sed "s|-1-|-0-|g")

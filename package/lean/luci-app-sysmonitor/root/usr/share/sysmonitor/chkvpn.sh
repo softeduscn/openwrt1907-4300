@@ -80,18 +80,22 @@ while [ "1" == "1" ]; do
 						killall $progsh
 					else
 						rm /tmp/test.$i
-						if [ "$(pgrep -f $progsh|wc -l)" -gt 1 ]; then
-							chksys=$((chksys+1))
-						else
-							chksys=0
-						fi
-						[ "$chksys" -ge 30 ] && killall $progsh	
+#						if [ "$(pgrep -f $progsh|wc -l)" -gt 1 ]; then
+#							chksys=$((chksys+1))
+#						else
+						chksys=0
+#						fi
+#						[ "$chksys" -ge 30 ] && killall $progsh	
 					fi
 				fi
 				;;
 			*)
-				killall $progsh
-				echo 0 > $progpid
+				chksys=$((chksys+1))
+				if [ "$chksys" -ge 15 ]; then
+					killall $progsh
+					echo 0 > $progpid
+					chksys=0
+				fi
 				;;
 		esac	
 	done

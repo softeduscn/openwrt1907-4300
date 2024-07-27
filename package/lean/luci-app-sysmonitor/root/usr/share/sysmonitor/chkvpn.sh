@@ -86,7 +86,7 @@ while [ "1" == "1" ]; do
 				;;
 			*)
 				chksys=$((chksys+1))
-				if [ "$chksys" -ge 15 ]; then
+				if [ "$chksys" -ge 120 ]; then
 					killall $progsh
 					echo 0 > $progpid
 					chksys=0
